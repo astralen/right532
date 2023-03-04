@@ -1,0 +1,21 @@
+local teleportKey = Enum.KeyCode.C -- клавиша для телепорта
+local distance = 10 -- расстояние для телепорта
+
+-- функция для телепортирования
+local function teleport()
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+    
+    if humanoidRootPart then
+        local newPosition = humanoidRootPart.Position + humanoidRootPart.CFrame.rightVector * distance
+        humanoidRootPart.CFrame = CFrame.new(newPosition)
+    end
+end
+
+-- привязываем функцию к событию нажатия клавиши
+game:GetService("UserInputService").InputBegan:Connect(function(input, processed)
+    if input.KeyCode == teleportKey and not processed then
+        teleport()
+    end
+end)
